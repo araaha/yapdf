@@ -4790,6 +4790,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "pdfviewer"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "chrono",
+ "eframe",
+ "egui",
+ "pdfcraft-annot",
+ "pdfcraft-cos",
+ "pdfcraft-render",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "toml",
+]
+
+[[package]]
 name = "pem"
 version = "3.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"

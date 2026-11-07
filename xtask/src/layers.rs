@@ -88,6 +88,7 @@ pub const TABLE: &[(&str, Class)] = &[
     ("oracle", Class::Testkit),
     // L8 apps + tooling
     ("pdfcraft", Class::Exempt),
+    ("pdfviewer", Class::Exempt),
     ("cli", Class::Exempt),
     ("web", Class::Exempt),
     ("xtask", Class::Exempt),
