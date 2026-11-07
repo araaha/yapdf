@@ -30,23 +30,23 @@ jobs:
       - name: Check the tag matches the crate version
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          version=$(grep -m1 '^version' apps/pdfviewer/Cargo.toml | cut -d'"' -f2)
+          version=$(grep -m1 '^version' apps/yapdf/Cargo.toml | cut -d'"' -f2)
           if [ "v$version" != "$GITHUB_REF_NAME" ]; then
-            echo "::error::tag $GITHUB_REF_NAME does not match version $version in apps/pdfviewer/Cargo.toml"
+            echo "::error::tag $GITHUB_REF_NAME does not match version $version in apps/yapdf/Cargo.toml"
             exit 1
           fi
 
       - name: Test
-        run: cargo test --locked -p pdfviewer
+        run: cargo test --locked -p yapdf
 
       - name: Build
-        run: cargo build --locked --release -p pdfviewer
+        run: cargo build --locked --release -p yapdf
 
       - name: Package
         run: |
-          name="pdfviewer-${GITHUB_REF_NAME//\//-}-x86_64-linux"
+          name="yapdf-${GITHUB_REF_NAME//\//-}-x86_64-linux"
           mkdir "$name"
-          cp target/release/pdfviewer apps/pdfviewer/README.md LICENSE-MIT LICENSE-APACHE NOTICE ATTRIBUTION.md "$name/"
+          cp target/release/yapdf apps/yapdf/README.md apps/yapdf/yapdf.desktop LICENSE-MIT LICENSE-APACHE NOTICE ATTRIBUTION.md "$name/"
           tar czf "$name.tar.gz" "$name"
           sha256sum "$name.tar.gz" > "$name.tar.gz.sha256"
           echo "PACKAGE=$name" >> "$GITHUB_ENV"
@@ -61,4 +61,4 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" "$PACKAGE.tar.gz" "$PACKAGE.tar.gz.sha256" --verify-tag --title "pdfviewer $GITHUB_REF_NAME" --generate-notes
+        run: gh release create "$GITHUB_REF_NAME" "$PACKAGE.tar.gz" "$PACKAGE.tar.gz.sha256" --verify-tag --title "yapdf $GITHUB_REF_NAME" --generate-notes
